@@ -24,21 +24,27 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    roles: {
+    roles: [
+      {
       type: Schema.Types.ObjectId,
       ref: 'Roles',
       required: false,
-    },
-    statics: {
+    }
+  ],
+    statics: [
+      {
       type: Schema.Types.ObjectId,
       ref: 'Statics',
       required: false,
-    },
-    equipment: {
+    }
+  ],
+    equipment: [
+      {
       type: Schema.Types.ObjectId,
       ref: 'Equipment',
       required: false,
     }
+    ]
   },
   {
     toJSON: {

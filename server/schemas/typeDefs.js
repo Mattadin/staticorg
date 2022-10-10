@@ -7,6 +7,38 @@ const typeDefs = gql`
     displayName: String
     email: String
     password: String
+    roles: [Roles]
+    statics: [Statics]
+    equipment: [Equipment]
+  }
+
+  type Equipment {
+    _id: ID
+    weapon: String
+    head: String
+    body: String
+    hands: String
+    legs: String 
+    feet: String 
+    earrings: String
+    necklace: String
+    bracelet: String 
+    leftRing: String 
+    rightRing: String
+  }
+
+  type Statics {
+    _id: ID 
+    staticName: String 
+    staticUsers: [User]
+  }
+
+  type Roles {
+    _id: ID 
+    role1: String 
+    role2: String 
+    role3: String 
+    role4: String
   }
 
   type Auth {

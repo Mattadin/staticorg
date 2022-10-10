@@ -1,44 +1,20 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// Schema to create User model
+// Schema to create Statics model
 const staticsSchema = new Schema(
   {
-    fullName: {
+    staticName: {
       type: String,
       required: true,
     },
-    displayName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: [/.+@.+\..+/, 'Must match an email address!'],
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 5,
-    },
-    roles: {
-      type: Schema.Types.ObjectId,
-      ref: 'Roles',
-      required: false,
-    },
-    statics: {
-      type: Schema.Types.ObjectId,
-      ref: 'Statics',
-      required: false,
-    },
-    equipment: {
-      type: Schema.Types.ObjectId,
-      ref: 'Equipment',
-      required: false,
-    }
+    staticUsers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
+    ]
   },
   {
     toJSON: {
@@ -54,20 +30,7 @@ const staticsSchema = new Schema(
   }
 );
 
-staticsSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
-
-  next();
-});
-
-staticsSchema.methods.isCorrectPassword = async function (password) {
-  return bcrypt.compare(password, this.password);
-};
-
-// Initialize our User model
-const Statics = model('Static', staticsSchema);
+// Initialize our Statics model
+const Statics = model('Statics', staticsSchema);
 
 module.exports = Statics;

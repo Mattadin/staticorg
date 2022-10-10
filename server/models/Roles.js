@@ -1,44 +1,25 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// Schema to create User model
+// Schema to create Roles model
 const rolesSchema = new Schema(
   {
-    fullName: {
+    role1: {
       type: String,
       required: true,
     },
-    displayName: {
+    role2: {
       type: String,
-      required: true,
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: [/.+@.+\..+/, 'Must match an email address!'],
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 5,
-    },
-    roles: {
-      type: Schema.Types.ObjectId,
-      ref: 'Roles',
       required: false,
     },
-    statics: {
-      type: Schema.Types.ObjectId,
-      ref: 'Statics',
+    role3: {
+      type: String,
       required: false,
     },
-    equipment: {
-      type: Schema.Types.ObjectId,
-      ref: 'Equipment',
+    role4: {
+      type: String,
       required: false,
-    }
+    },
   },
   {
     toJSON: {
@@ -54,20 +35,7 @@ const rolesSchema = new Schema(
   }
 );
 
-rolesSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
-
-  next();
-});
-
-rolesSchema.methods.isCorrectPassword = async function (password) {
-  return bcrypt.compare(password, this.password);
-};
-
-// Initialize our User model
-const Roles = model('User', rolesSchema);
+// Initialize our Roles model
+const Roles = model('Roles', rolesSchema);
 
 module.exports = Roles;

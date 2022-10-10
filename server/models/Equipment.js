@@ -1,43 +1,52 @@
 const { Schema, model } = require('mongoose');
 
-// Schema to create User model
+// Schema to create Equipment model
 const equipmentSchema = new Schema(
   {
-    fullName: {
+    weapon: {
       type: String,
-      required: true,
-    },
-    displayName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: [/.+@.+\..+/, 'Must match an email address!'],
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 5,
-    },
-    roles: {
-      type: Schema.Types.ObjectId,
-      ref: 'Roles',
       required: false,
     },
-    statics: {
-      type: Schema.Types.ObjectId,
-      ref: 'Statics',
+    head: {
+      type: String,
       required: false,
     },
-    equipment: {
-      type: Schema.Types.ObjectId,
-      ref: 'Equipment',
+    body: {
+      type: String,
       required: false,
-    }
+    },
+    hands: {
+      type: String,
+      required: false,
+    },
+    legs: {
+      type: String,
+      required: false,
+    },
+    feet: {
+      type: String,
+      required: false,
+    },
+    earrings: {
+      type: String,
+      required: false,
+    },
+    necklace: {
+      type: String,
+      required: false,
+    },
+    bracelet: {
+      type: String,
+      required: false,
+    },
+    leftRing: {
+      type: String,
+      required: false,
+    },
+    rightRing: {
+      type: String,
+      required: false,
+    },
   },
   {
     toJSON: {
@@ -53,20 +62,7 @@ const equipmentSchema = new Schema(
   }
 );
 
-equipmentSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
-
-  next();
-});
-
-equipmentSchema.methods.isCorrectPassword = async function (password) {
-  return bcrypt.compare(password, this.password);
-};
-
-// Initialize our User model
+// Initialize our Equipment model
 const Equipment = model('Equipment', equipmentSchema);
 
 module.exports = Equipment;
